@@ -11,7 +11,7 @@ liquidity = {
     ("tokenD", "tokenE"): (60, 25),
 }
 
-def getReserves(tokenA: str, tokenB: str) -> tuple[float, float]:
+def getReserves(tokenA, tokenB):
     (token0, token1) = (tokenA, tokenB) if tokenA < tokenB else (tokenB, tokenA)
     reserve0, reserve1 = liquidity.get((token0, token1))
     if (token0 == tokenA):
@@ -19,7 +19,7 @@ def getReserves(tokenA: str, tokenB: str) -> tuple[float, float]:
     else:
         return reserve1, reserve0
 
-def getAmountOut(amountIn: float, tokenIn: str, tokenOut: str) -> float:
+def getAmountOut(amountIn, tokenIn, tokenOut):
     assert amountIn > 0
     reserveIn, reserveOut = getReserves(tokenIn, tokenOut)
     assert reserveIn > 0 and reserveOut > 0
@@ -30,7 +30,7 @@ def getAmountOut(amountIn: float, tokenIn: str, tokenOut: str) -> float:
     amountOut = numerator / denominator
     return amountOut
 
-def getAmountsOut(amountIn: float, path: list[str]):
+def getAmountsOut(amountIn, path):
     assert len(path) >= 2
     #amounts = [] * len(path)
     #amounts[0] = amountIn
@@ -41,7 +41,7 @@ def getAmountsOut(amountIn: float, path: list[str]):
         # print(amount)
     return amount
 
-def searchAllPath(path: list[str], candidates: list[str], amount: float) -> float:
+def searchAllPath(path, candidates, amount):
     '''
     A DFS algorithm that search all possible path with no token visited twice
     It returns immediately once it finds a path that yields more than 20 units of tokenB.
